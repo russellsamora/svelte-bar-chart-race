@@ -1,13 +1,15 @@
 <script>
+  import { writable } from "svelte/store";
   import { onMount } from "svelte";
   import { tweened } from "svelte/motion";
+  import { timer, elapsed } from "./timer.js";
   import Bars from "./Chart.Bars.svelte";
   import Axis from "./Chart.Axis.svelte";
   import Labels from "./Chart.Labels.svelte";
   import Ticker from "./Chart.Ticker.svelte";
 
-  const duration = 2000;
-  const timer = tweened(0, { duration });
+  const duration = 1000;
+  const frameIndex = tweened(0, { duration });
 
   let keyframes;
   let width;
@@ -18,14 +20,21 @@
   onMount(async () => {
     const response = await fetch("keyframes.json");
     keyframes = await response.json();
+    timer.start();
 
     for (let frame of keyframes) {
-      await timer.update((v) => v + 1);
+      await frameIndex.update((v) => v + 1);
       date = frame[0];
     }
   });
 </script>
 
+<button on:click={() => timer.start()}>start</button>
+<button on:click={() => timer.stop()}>stop</button>
+<button on:click={() => timer.toggle()}>toggle</button>
+<button on:click={() => timer.reset()}>reset</button>
+
+<p>{Math.floor($elapsed / 1000)}</p>
 {#if keyframes}
   <figure
     class="chart-container"
@@ -41,6 +50,7 @@
   </figure>
 {/if}
 
+<!-- <p>{Math.floor($elapsed / 1000)}</p> -->
 <style>
   figure {
     position: relative;
