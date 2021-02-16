@@ -33,8 +33,9 @@
 <button on:click={() => timer.stop()}>stop</button>
 <button on:click={() => timer.toggle()}>toggle</button>
 <button on:click={() => timer.reset()}>reset</button>
+<button on:click={() => timer.set(1000)}>set 1000</button>
 
-<p>{Math.floor($elapsed / 1000)}</p>
+<h1>{$elapsed}</h1>
 {#if keyframes}
   <figure
     class="chart-container"

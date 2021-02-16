@@ -30,8 +30,11 @@ const timer = {
 	toggle() {
 		req ? timer.stop() : timer.start();	
 	},
+	set(val) {
+		if (typeof val === "number") elapsed.set(val);
+	},
 	reset() {
-		elapsed.set(0);
+		timer.set(0);
 	}
 };
 
