@@ -17,15 +17,22 @@
 
   let date;
 
+  // $: frameIndex2 = Math.floor($elapsed / 1000);
+  // $: frame2 = keyframes[frameIndex2];
+  // $: date2 = frame2[0];
+
   onMount(async () => {
     const response = await fetch("keyframes.json");
     keyframes = await response.json();
-    timer.start();
 
+    // method 1
     for (let frame of keyframes) {
       await frameIndex.update((v) => v + 1);
       date = frame[0];
     }
+
+    // method 2
+    // timer.start();
   });
 </script>
 
