@@ -7,6 +7,9 @@
   import Labels from "./Chart.Labels.svelte";
   import Ticker from "./Chart.Ticker.svelte";
 
+  const duration = 500;
+  const maxRank = 10;
+
   let step = 0;
   let keyframes = [];
   let enabled = false;
@@ -23,19 +26,25 @@
     enabled = step < maxStep;
     frame = keyframes[index];
     date = frame[0];
-    data = frame[1];
+    data = frame[1].filter((d) => d.rank < maxRank);
   }
 
   onMount(async () => {
     const response = await fetch("keyframes.json");
     keyframes = await response.json();
+    // console.table(
+    //   keyframes.map((d) => ({
+    //     date: d[0],
+    //     ...d[1].find((x) => x.name === "Ford"),
+    //   }))
+    // );
   });
 </script>
 
 {#if keyframes}
   <Timer
     bind:step
-    duration="{50}"
+    duration="{duration}"
     enabled="{enabled}"
     max="{keyframes.length}"
     on:ended="{() => (enabled = false)}"
