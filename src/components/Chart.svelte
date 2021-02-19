@@ -1,64 +1,59 @@
 <script>
-  import { writable } from "svelte/store";
   import { onMount } from "svelte";
-  import { tweened } from "svelte/motion";
-  import { timer, elapsed } from "./timer.js";
+
+  import Timer from "./Timer.svelte";
   import Bars from "./Chart.Bars.svelte";
   import Axis from "./Chart.Axis.svelte";
   import Labels from "./Chart.Labels.svelte";
   import Ticker from "./Chart.Ticker.svelte";
 
-  const duration = 1000;
-  const frameIndex = tweened(0, { duration });
-
-  let keyframes;
+  let step = 0;
+  let keyframes = [];
+  let enabled = false;
+  let date;
+  let data;
+  let frame;
   let width;
   let height;
 
-  let date;
+  $: maxStep = keyframes.length;
 
-  // $: frameIndex2 = Math.floor($elapsed / 1000);
-  // $: frame2 = keyframes[frameIndex2];
-  // $: date2 = frame2[0];
+  $: if (keyframes.length) {
+    const index = Math.min(step, maxStep - 1);
+    enabled = step < maxStep;
+    frame = keyframes[index];
+    date = frame[0];
+    data = frame[1];
+  }
 
   onMount(async () => {
     const response = await fetch("keyframes.json");
     keyframes = await response.json();
-
-    // method 1
-    for (let frame of keyframes) {
-      await frameIndex.update((v) => v + 1);
-      date = frame[0];
-    }
-
-    // method 2
-    // timer.start();
   });
 </script>
 
-<button on:click={() => timer.start()}>start</button>
-<button on:click={() => timer.stop()}>stop</button>
-<button on:click={() => timer.toggle()}>toggle</button>
-<button on:click={() => timer.reset()}>reset</button>
-<button on:click={() => timer.set(1000)}>set 1000</button>
-
-<h1>{$elapsed}</h1>
 {#if keyframes}
-  <figure
-    class="chart-container"
-    bind:offsetWidth={width}
-    bind:offsetHeight={height}
-  >
+  <Timer
+    bind:step
+    duration="{50}"
+    enabled="{enabled}"
+    max="{keyframes.length}"
+    on:ended="{() => (enabled = false)}"
+  />
+
+  <figure bind:offsetWidth="{width}" bind:offsetHeight="{height}">
     <svg>
-      <Bars />
+      <Bars data="{data}" />
       <Axis />
-      <Labels />
-      <Ticker {date} />
     </svg>
+
+    <div>
+      <Labels />
+      <Ticker date="{date}" />
+    </div>
   </figure>
 {/if}
 
-<!-- <p>{Math.floor($elapsed / 1000)}</p> -->
 <style>
   figure {
     position: relative;
@@ -67,7 +62,8 @@
     margin: 0 auto;
     background: #efefef;
   }
-  svg {
+
+  figure > * {
     display: block;
     position: absolute;
     top: 0;

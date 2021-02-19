@@ -3,4 +3,6 @@
   $: year = new Date(date).getFullYear();
 </script>
 
-<text x="0" y="12">{year}</text>
+{#if date}
+  <p>{year}</p>
+{/if}
