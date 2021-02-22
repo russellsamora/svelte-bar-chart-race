@@ -10,20 +10,20 @@
   const duration = 500;
   const maxRank = 10;
 
-  let step = 0;
+  let currentKeyframe = 0;
   let keyframes = [];
-  let enabled = false;
+  let isEnabled = false;
   let date;
   let data;
   let frame;
   let width;
   let height;
 
-  $: maxStep = keyframes.length;
+  $: maxKeyframe = keyframes.length;
 
   $: if (keyframes.length) {
-    const index = Math.min(step, maxStep - 1);
-    enabled = step < maxStep;
+    const index = Math.min(currentKeyframe, maxKeyframe - 1);
+    isEnabled = currentKeyframe < maxKeyframe;
     frame = keyframes[index];
     date = frame[0];
     data = frame[1].filter((d) => d.rank < maxRank);
@@ -32,22 +32,16 @@
   onMount(async () => {
     const response = await fetch("keyframes.json");
     keyframes = await response.json();
-    // console.table(
-    //   keyframes.map((d) => ({
-    //     date: d[0],
-    //     ...d[1].find((x) => x.name === "Ford"),
-    //   }))
-    // );
   });
 </script>
 
 {#if keyframes}
   <Timer
-    bind:step
+    bind:currentKeyframe
+    maxKeyframe="{keyframes.length}"
     duration="{duration}"
-    enabled="{enabled}"
-    max="{keyframes.length}"
-    on:ended="{() => (enabled = false)}"
+    isEnabled="{isEnabled}"
+    on:ended="{() => (isEnabled = false)}"
   />
 
   <figure bind:offsetWidth="{width}" bind:offsetHeight="{height}">

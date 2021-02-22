@@ -2,26 +2,27 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { timer, elapsed } from "./timer.js";
   export let duration = 1000;
-  export let step = 0;
-  export let max = 0;
-  export let enabled;
+  export let currentKeyframe = 0;
+  export let maxKeyframe = 0;
+  export let isEnabled;
 
   let sliderValue;
 
   const dispatch = createEventDispatcher();
   $: {
-    step = Math.floor($elapsed / duration);
-    sliderValue = step;
+    currentKeyframe = Math.floor($elapsed / duration);
+    sliderValue = currentKeyframe;
   }
 
-  $: if (step === max) dispatch("ended");
+  $: if (currentKeyframe === maxKeyframe) dispatch("ended");
 
-  $: enabled ? timer.start() : timer.stop();
+  $: isEnabled ? timer.start() : timer.stop();
 </script>
 
 <h1>{$elapsed}</h1>
+<h1>{currentKeyframe}</h1>
 
-<input type="range" min="{0}" max="{max}" bind:value="{sliderValue}" />
+<input type="range" min="{0}" max="{maxKeyframe}" bind:value="{sliderValue}" />
 <button on:click="{() => timer.start()}">start</button>
 <button on:click="{() => timer.stop()}">stop</button>
 <button on:click="{() => timer.toggle()}">toggle</button>
