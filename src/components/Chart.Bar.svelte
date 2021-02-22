@@ -11,3 +11,9 @@
 </script>
 
 <rect x="0" {y} {width} height="{$dimensions.barHeight || 0}"></rect>
+
+<style>
+  rect {
+    fill: #a2d6d4;
+  }
+</style>

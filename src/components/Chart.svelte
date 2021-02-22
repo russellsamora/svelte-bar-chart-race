@@ -23,7 +23,7 @@
   let containerWidth;
   let containerHeight;
 
-  const margins = [0, 0, 0, 200];
+  const margins = [0, 0, 0, 0];
 
   $: maxKeyframe = keyframes.length;
   const names = keyframes[0][1].map(d => d.name);
@@ -63,9 +63,11 @@
   };
 
   let scales = writable({});
+  let xMax = tweened(0, { duration });
+  $: $xMax = Math.max(...data.map(d => d.value));
   $: $scales = {
     x: scaleLinear()
-      .domain([0, Math.max(...data.map(d => d.value))])
+      .domain([0, $xMax])
       .range([0, $dimensions.width]),
     y: scaleLinear()
       .domain([0, maxRank])
@@ -92,8 +94,10 @@
     bind:offsetWidth="{containerWidth}"
     bind:offsetHeight="{containerHeight}">
     <svg>
-      <Bars {maxRank} {data} />
-      <Axis />
+      <g transform="translate({margins[3]}, {margins[0]})">
+        <Bars {maxRank} {data} />
+        <Axis />
+      </g>
     </svg>
 
     <div>
@@ -110,6 +114,7 @@
     height: 50vh;
     margin: 0 auto;
     background: #efefef;
+    font-family: sans-serif;
   }
 
   figure > * {

@@ -1,9 +1,12 @@
 <script>
   import { getContext } from "svelte";
+  import { format } from "d3";
 
   const { data, names, scales, dimensions } = getContext("Chart");
 
   export let maxRank = 10;
+
+  const formatNumber = format(",.0f");
 </script>
 
 <div>
@@ -13,7 +16,8 @@
         class="label"
         style="height: {$dimensions.barHeight}px; transform: translate({$scales.x(value)}px,
         {$scales.y(rank) + $dimensions.barPadding / 2}px)">
-        {names[i]}
+        <div class="name">{names[i]}</div>
+        <div class="value">{formatNumber(value)}</div>
       </div>
     {/if}
   {/each}
@@ -22,9 +26,21 @@
 <style>
   .label {
     position: absolute;
-    padding-left: 0.5em;
+    left: -0.5em;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: 0;
+    white-space: nowrap;
+  }
+  .name {
+    font-weight: 600;
+    font-size: 0.9em;
+    line-height: 1.3em;
+  }
+  .value {
+    font-size: 0.7em;
+    line-height: 1.3em;
   }
 </style>

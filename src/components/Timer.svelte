@@ -28,3 +28,4 @@
 <button on:click="{() => timer.toggle()}">toggle</button>
 <button on:click="{() => timer.reset()}">reset</button>
 <button on:click="{() => timer.set(1000)}">set 1000</button>
+<button on:click="{() => timer.set(50000)}">set 50000</button>
