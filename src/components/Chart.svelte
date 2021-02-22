@@ -26,7 +26,7 @@
   const margins = [0, 0, 0, 0];
 
   $: maxKeyframe = keyframes.length;
-  const names = keyframes[0][1].map(d => d.name);
+  const names = keyframes[0][1].map((d) => d.name);
 
   $: {
     const index = Math.min(currentKeyframe, maxKeyframe - 1);
@@ -41,8 +41,8 @@
   //   keyframes = await response.json();
   // });
 
-  $: currentData = names.map(name => {
-    const d = data.find(d => d.name == name) || {};
+  $: currentData = names.map((name) => {
+    const d = data.find((d) => d.name == name) || {};
     return { rank: d.rank, value: d.value };
   });
   const tweenedData = tweened(currentData, { duration });
@@ -59,26 +59,22 @@
     width,
     height,
     barHeight: height / maxRank - barPadding,
-    barPadding
+    barPadding,
   };
 
   let scales = writable({});
   let xMax = tweened(0, { duration });
-  $: $xMax = Math.max(...data.map(d => d.value));
+  $: $xMax = Math.max(...data.map((d) => d.value));
   $: $scales = {
-    x: scaleLinear()
-      .domain([0, $xMax])
-      .range([0, $dimensions.width]),
-    y: scaleLinear()
-      .domain([0, maxRank])
-      .range([0, $dimensions.height])
+    x: scaleLinear().domain([0, $xMax]).range([0, $dimensions.width]),
+    y: scaleLinear().domain([0, maxRank]).range([0, $dimensions.height]),
   };
 
   setContext("Chart", {
     dimensions,
     scales,
     data: tweenedData,
-    names
+    names,
   });
 </script>
 
@@ -86,23 +82,25 @@
   <Timer
     bind:currentKeyframe
     maxKeyframe="{keyframes.length}"
-    {duration}
-    {isEnabled}
-    on:ended="{() => (isEnabled = false)}" />
+    duration="{duration}"
+    isEnabled="{isEnabled}"
+    on:ended="{() => (isEnabled = false)}"
+  />
 
   <figure
     bind:offsetWidth="{containerWidth}"
-    bind:offsetHeight="{containerHeight}">
+    bind:offsetHeight="{containerHeight}"
+  >
     <svg>
       <g transform="translate({margins[3]}, {margins[0]})">
-        <Bars {maxRank} {data} />
+        <Bars maxRank="{maxRank}" data="{data}" />
         <Axis />
       </g>
     </svg>
 
     <div>
-      <Labels {maxRank} />
-      <Ticker {date} />
+      <Labels maxRank="{maxRank}" />
+      <Ticker date="{date}" />
     </div>
   </figure>
 {/if}
@@ -124,5 +122,6 @@
     left: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 </style>
