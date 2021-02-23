@@ -14,8 +14,11 @@
     {#if rank < maxRank}
       <div
         class="label"
-        style="height: {$dimensions.barHeight}px; transform: translate({$scales.x(value)}px,
-        {$scales.y(rank) + $dimensions.barPadding / 2}px)">
+        style="height: {$dimensions.barHeight}px; transform: translate({$scales.x(
+          value
+        )}px,
+        {$scales.y(rank) + $dimensions.barMargin / 2}px)"
+      >
         <div class="name">{names[i]}</div>
         <div class="value">{formatNumber(value)}</div>
       </div>

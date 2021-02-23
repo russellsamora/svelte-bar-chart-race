@@ -5,15 +5,18 @@
 
   export let value;
   export let rank;
+  export let fill;
 
   $: width = $scales.x(value) || 0;
-  $: y = ($scales.y(rank) || 0) + $dimensions.barPadding / 2;
+  $: y = ($scales.y(rank) || 0) + $dimensions.barMargin / 2;
 </script>
 
-<rect x="0" {y} {width} height="{$dimensions.barHeight || 0}"></rect>
+<rect
+  x="0"
+  y="{y}"
+  width="{width}"
+  height="{$dimensions.barHeight || 0}"
+  style="fill: {fill};"></rect>
 
 <style>
-  rect {
-    fill: #a2d6d4;
-  }
 </style>

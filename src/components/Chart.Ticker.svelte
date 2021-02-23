@@ -6,3 +6,14 @@
 {#if date}
   <p>{year}</p>
 {/if}
+
+<style>
+  p {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    font-size: 3em;
+    font-weight: bold;
+  }
+</style>

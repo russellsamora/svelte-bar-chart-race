@@ -17,3 +17,4 @@ Tk.
 
 - debounce resize (heavy to re-render charts)
 - side by side d3 vs. svelte code comparison
+- tweened perf (one vs many)

@@ -1,9 +1,8 @@
 <script>
-  import { onMount, setContext } from "svelte";
+  import { range, scaleLinear, scaleQuantile } from "d3";
+  import { setContext } from "svelte";
   import { writable } from "svelte/store";
   import { tweened } from "svelte/motion";
-  import { range, scaleLinear, scaleQuantile } from "d3";
-  import keyframes from "./keyframes.json";
 
   import Timer from "./Timer.svelte";
   import Bars from "./Chart.Bars.svelte";
@@ -11,96 +10,79 @@
   import Labels from "./Chart.Labels.svelte";
   import Ticker from "./Chart.Ticker.svelte";
 
-  const duration = 500;
-  const maxRank = 10;
+  import keyframes from "./keyframes.json";
 
+  const duration = 300; // ms between keyframes
+  const maxRank = 10; // how many bars to show
+  const names = keyframes[0][1].map((d) => d.name); // all company names
+  const keyframeCount = keyframes.length; // number of keyframes
+  const barMargin = 4; // space between bars
+
+  const dimensions = writable({});
+  const scales = writable({});
+  const data = tweened(null, { duration });
+  const xMax = tweened(null, { duration });
+
+  let figureWidth;
+  let figureHeight;
   let currentKeyframe = 0;
-  // let keyframes = [];
   let isEnabled = false;
-  let date;
-  let data = [];
-  let frame;
-  let containerWidth;
-  let containerHeight;
 
-  const margins = [0, 0, 0, 0];
-
-  $: maxKeyframe = keyframes.length;
-  const names = keyframes[0][1].map((d) => d.name);
-
-  $: {
-    const index = Math.min(currentKeyframe, maxKeyframe - 1);
-    isEnabled = currentKeyframe < maxKeyframe;
-    frame = keyframes[index];
-    date = frame[0];
-    data = frame[1];
-  }
-
-  // onMount(async () => {
-  //   const response = await fetch("keyframes.json");
-  //   keyframes = await response.json();
-  // });
-
+  $: frameIndex = Math.min(currentKeyframe, keyframeCount - 1);
+  $: frame = keyframes[frameIndex];
+  $: isEnabled = currentKeyframe < keyframeCount;
+  $: keyframeDate = frame[0];
+  $: keyframeData = frame[1];
+  $: width = figureWidth;
+  $: height = figureHeight;
+  $: barHeight = height / maxRank - barMargin;
   $: currentData = names.map((name) => {
-    const d = data.find((d) => d.name == name) || {};
-    return { rank: d.rank, value: d.value };
+    const { rank, value } = keyframeData.find((d) => d.name == name) || {};
+    return { rank, value };
   });
-  const tweenedData = tweened(currentData, { duration });
-  $: tweenedData.set(currentData);
 
-  let dimensions = writable({});
-  const barPadding = 2;
-  $: width = containerWidth - margins[1] - margins[3];
-  $: height = containerHeight - margins[0] - margins[2];
-  $: $dimensions = {
-    containerWidth,
-    containerHeight,
-    margins,
+  // update stores
+  $: data.set(currentData);
+
+  $: dimensions.set({
     width,
     height,
-    barHeight: height / maxRank - barPadding,
-    barPadding,
-  };
+    barHeight,
+    barMargin,
+  });
 
-  let scales = writable({});
-  let xMax = tweened(0, { duration });
-  $: $xMax = Math.max(...data.map((d) => d.value));
-  $: $scales = {
+  $: xMax.set(Math.max(...keyframeData.map((d) => d.value)));
+
+  $: scales.set({
     x: scaleLinear().domain([0, $xMax]).range([0, $dimensions.width]),
     y: scaleLinear().domain([0, maxRank]).range([0, $dimensions.height]),
-  };
-
-  setContext("Chart", {
-    dimensions,
-    scales,
-    data: tweenedData,
-    names,
   });
+
+  $: chartContext = { dimensions, scales, data, names };
+
+  $: setContext("Chart", chartContext);
 </script>
 
 {#if keyframes}
   <Timer
     bind:currentKeyframe
-    maxKeyframe="{keyframes.length}"
+    keyframeCount="{keyframes.length}"
     duration="{duration}"
     isEnabled="{isEnabled}"
-    on:ended="{() => (isEnabled = false)}"
+    on:end="{() => (isEnabled = false)}"
   />
 
-  <figure
-    bind:offsetWidth="{containerWidth}"
-    bind:offsetHeight="{containerHeight}"
-  >
+  <figure bind:offsetWidth="{figureWidth}" bind:offsetHeight="{figureHeight}">
     <svg>
-      <g transform="translate({margins[3]}, {margins[0]})">
-        <Bars maxRank="{maxRank}" data="{data}" />
+      <g>
+        <Bars maxRank="{maxRank}" />
         <Axis />
       </g>
     </svg>
 
     <div>
       <Labels maxRank="{maxRank}" />
-      <Ticker date="{date}" />
+      <Ticker date="{keyframeDate}" />
     </div>
   </figure>
 {/if}
@@ -108,10 +90,10 @@
 <style>
   figure {
     position: relative;
-    max-width: 40em;
-    height: 50vh;
+    max-width: 50em;
+    height: 60vh;
     margin: 0 auto;
-    background: #efefef;
+    /* background: #efefef; */
     font-family: sans-serif;
   }
 
