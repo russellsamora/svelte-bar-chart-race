@@ -40,7 +40,7 @@
   }
   p {
     margin: 0;
-    font-size: 0.9em;
+    font-size: 1em;
     text-align: right;
   }
   .name {

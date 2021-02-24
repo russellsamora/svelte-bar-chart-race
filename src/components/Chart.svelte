@@ -36,10 +36,9 @@
   $: width = figureWidth;
   $: height = figureHeight;
   $: barHeight = height / maxRank - barMargin;
-  $: currentData = names.map((name) => {
-    const { rank, value } = keyframeData.find((d) => d.name == name) || {};
-    return { rank, value };
-  });
+  $: currentData = names.map((name) => ({
+    ...keyframeData.find((d) => d.name == name),
+  }));
 
   // update stores
   $: data.set(currentData);
@@ -76,11 +75,11 @@
     <svg>
       <g>
         <Bars maxRank="{maxRank}" />
-        <Axis />
       </g>
     </svg>
 
     <div>
+      <Axis />
       <Labels maxRank="{maxRank}" />
       <Ticker date="{keyframeDate}" />
     </div>
@@ -93,7 +92,6 @@
     max-width: 50em;
     height: 60vh;
     margin: 0 auto;
-    /* background: #efefef; */
     font-family: sans-serif;
   }
 
@@ -104,6 +102,9 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  svg {
     overflow: hidden;
   }
 </style>

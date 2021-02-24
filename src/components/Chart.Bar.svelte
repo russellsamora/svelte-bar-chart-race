@@ -19,4 +19,7 @@
   style="fill: {fill};"></rect>
 
 <style>
+  rect {
+    opacity: 0.5;
+  }
 </style>
