@@ -19,18 +19,22 @@
   $: isEnabled ? timer.start() : timer.stop();
 </script>
 
-<h1>{$elapsed}</h1>
-<h1>{currentKeyframe}</h1>
+<div>
+  <!-- <input
+    type="range"
+    min="{0}"
+    max="{keyframeCount}"
+    bind:value="{sliderValue}"
+  /> -->
+  <button on:click="{() => timer.start()}">start</button>
+  <button on:click="{() => timer.stop()}">stop</button>
+  <button on:click="{() => timer.reset()}">reset</button>
+</div>
 
-<input
-  type="range"
-  min="{0}"
-  max="{keyframeCount}"
-  bind:value="{sliderValue}"
-/>
-<button on:click="{() => timer.start()}">start</button>
-<button on:click="{() => timer.stop()}">stop</button>
-<button on:click="{() => timer.toggle()}">toggle</button>
-<button on:click="{() => timer.reset()}">reset</button>
-<button on:click="{() => timer.set(1000)}">set 1000</button>
-<button on:click="{() => timer.set(50000)}">set 50000</button>
+<style>
+  div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3em;
+  }
+</style>

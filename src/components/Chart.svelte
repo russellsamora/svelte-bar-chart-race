@@ -71,6 +71,8 @@
     on:end="{() => (isEnabled = false)}"
   />
 
+  <!-- <h3>Best Global Brands</h3>
+  <p>Value in $M; Data: Interbrand</p> -->
   <figure bind:offsetWidth="{figureWidth}" bind:offsetHeight="{figureHeight}">
     <svg>
       <g>
@@ -78,9 +80,15 @@
       </g>
     </svg>
 
-    <div>
+    <div class="axis">
       <Axis />
+    </div>
+
+    <div class="labels">
       <Labels maxRank="{maxRank}" />
+    </div>
+
+    <div class="ticker">
       <Ticker date="{keyframeDate}" />
     </div>
   </figure>
@@ -102,9 +110,10 @@
     left: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
-  svg {
-    overflow: hidden;
+  .axis {
+    overflow: visible;
   }
 </style>
