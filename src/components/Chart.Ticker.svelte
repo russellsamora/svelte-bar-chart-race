@@ -13,7 +13,9 @@
     bottom: 0;
     right: 0;
     margin: 0;
-    font-size: 3em;
-    font-weight: bold;
+    font-size: 5em;
+    letter-spacing: -0.09em;
+    font-weight: 600;
+    font-feature-settings: "tnum" 1;
   }
 </style>

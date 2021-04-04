@@ -32,11 +32,13 @@
     height: 100%;
     width: 1px;
     background: #fff;
+    opacity: 0.5;
   }
   .value {
     margin: 0;
     transform: translate(-50%, -100%);
     font-size: 0.75em;
-    color: #666;
+    color: #5a5b6c;
+    font-feature-settings: "tnum" 1;
   }
 </style>

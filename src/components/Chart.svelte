@@ -71,15 +71,12 @@
     isEnabled="{isEnabled}"
     on:end="{() => (isEnabled = false)}"
   />
-
   <!-- <h3>Best Global Brands</h3>
   <p>Value in $M; Data: Interbrand</p> -->
   <figure bind:offsetWidth="{figureWidth}" bind:offsetHeight="{figureHeight}">
-    <svg>
-      <g>
-        <Bars maxRank="{maxRank}" />
-      </g>
-    </svg>
+    <div>
+      <Bars maxRank="{maxRank}" />
+    </div>
 
     <div class="axis">
       <Axis />
@@ -99,9 +96,9 @@
   figure {
     position: relative;
     max-width: 50em;
-    height: 60vh;
+    width: 100%;
+    height: 40em;
     margin: 0 auto;
-    font-family: sans-serif;
   }
 
   figure > * {
@@ -111,7 +108,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
   .axis {

@@ -35,7 +35,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-right: 0.5em;
+    padding-right: 0.9em;
     height: 100%;
   }
   p {
@@ -44,9 +44,10 @@
     text-align: right;
   }
   .name {
-    font-weight: bold;
+    font-weight: 600;
   }
   .value {
     font-size: 0.75em;
+    font-feature-settings: "tnum" 1;
   }
 </style>

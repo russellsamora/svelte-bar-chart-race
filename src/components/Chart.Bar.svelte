@@ -11,15 +11,15 @@
   $: y = ($scales.y(rank) || 0) + $dimensions.barMargin / 2;
 </script>
 
-<rect
-  x="0"
-  y="{y}"
-  width="{width}"
-  height="{$dimensions.barHeight || 0}"
-  style="fill: {fill};"></rect>
+<div
+  style="transform: translateY({y}px; --bar-color: {fill}88; width: {width -
+    3}px; height: {$dimensions.barHeight || 0}px"
+></div>
 
 <style>
-  rect {
-    opacity: 0.5;
+  div {
+    position: absolute;
+    background: var(--bar-color);
+    border-left: 3px solid var(--bar-color);
   }
 </style>
