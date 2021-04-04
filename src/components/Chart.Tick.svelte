@@ -5,7 +5,7 @@
   export let x;
 
   const duration = 250;
-  const formatNumber = format(",.0f");
+  const formatNumber = (d) => format(",.0f")(d * 100) + "%";
   $: formattedValue = formatNumber(value);
 </script>
 

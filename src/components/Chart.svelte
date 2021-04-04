@@ -11,6 +11,7 @@
   import Ticker from "./Chart.Ticker.svelte";
 
   import keyframes from "./keyframes.json";
+  console.log("keyframes", keyframes);
 
   const duration = 300; // ms between keyframes
   const maxRank = 10; // how many bars to show
