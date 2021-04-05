@@ -3,44 +3,57 @@
 </script>
 
 <main>
-  <h1>Languages on Stack Overflow</h1>
-  <h2>% of questions by programming language</h2>
-  <div class="intro">
+  <section class="intro">
+    <h1>Languages on Stack Overflow</h1>
+    <p>% of questions by programming language</p>
+  </section>
+
+  <Chart />
+
+  <section class="outro">
     <p>
       Data from <a
         href="https://insights.stackoverflow.com/trends?tags=java%2Cc%2Cc%2B%2B%2Cpython%2Cc%23%2Cvb.net[…]mbly%2Cphp%2Cperl%2Cruby%2Cvb%2Cswift%2Cr%2Cobjective-c"
         >Stack Overflow</a
-      >
+      >. This was created for the
+      <a href="https://sveltesummit.com/">Svelte Summit 2021</a>
+      talk <a href="#">Tk Title</a> by Amelia Wattenberger and Russell
+      Goldenberg. View the source code on
+      <a href="https://github.com/russellgoldenberg/svelte-bar-chart-race"
+        >Github</a
+      >.
     </p>
-  </div>
-  <Chart />
+  </section>
 </main>
 
 <style>
   @import url("https://rsms.me/inter/inter.css");
+
   main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     font-family: "Inter", sans-serif;
-  }
-  .intro {
-    margin-bottom: 1.3em;
+    padding: 0 1em;
+    max-width: 50em;
+    margin: 0 auto;
   }
 
-  h1 {
+  .intro {
+    text-align: center;
+    margin: 1em 0;
+  }
+
+  .intro h1 {
     font-weight: 900;
     font-size: 3em;
-    text-align: center;
-    margin-bottom: 0.1em;
+    margin: 0;
   }
-  h2 {
-    margin: 0 0 0.5em;
-    font-weight: 300;
-    font-size: 1.6em;
-    text-align: center;
-    color: #747294;
+
+  .intro p {
+    margin: 0;
+    font-size: 1.5em;
   }
-  p {
+
+  .outro {
+    margin-top: 3em;
+    border-top: 1px solid gray;
   }
 </style>

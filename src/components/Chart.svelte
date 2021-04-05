@@ -14,7 +14,7 @@
   console.log("keyframes", keyframes);
 
   const duration = 300; // ms between keyframes
-  const maxRank = 10; // how many bars to show
+  const maxRank = 8; // how many bars to show
   const names = keyframes[0][1].map((d) => d.name); // all company names
   const keyframeCount = keyframes.length; // number of keyframes
   const barMargin = 4; // space between bars
@@ -94,11 +94,11 @@
 
 <style>
   figure {
+    display: block;
     position: relative;
-    max-width: 50em;
     width: 100%;
-    height: 40em;
-    margin: 0 auto;
+    height: 60vh;
+    margin: 0;
   }
 
   figure > * {
@@ -108,7 +108,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
   }
 
   .axis {

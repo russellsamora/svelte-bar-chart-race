@@ -6,7 +6,7 @@
   const { data } = getContext("Chart");
   const colorCount = colors.length;
 
-  export let maxRank = 10;
+  export let maxRank;
 </script>
 
 {#each $data as { value, rank }, i (i)}
