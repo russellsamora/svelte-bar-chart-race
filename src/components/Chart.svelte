@@ -11,7 +11,6 @@
   import Ticker from "./Chart.Ticker.svelte";
 
   import keyframes from "./keyframes.json";
-  console.log("keyframes", keyframes);
 
   const duration = 300; // ms between keyframes
   const maxRank = 8; // how many bars to show
@@ -98,7 +97,9 @@
     position: relative;
     width: 100%;
     height: 60vh;
+    min-height: 420px;
     margin: 0;
+    user-select: none;
   }
 
   figure > * {

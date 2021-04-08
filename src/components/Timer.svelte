@@ -6,13 +6,14 @@
   export let keyframeCount = 0;
   export let isEnabled = false;
 
-  let sliderValue;
-
   const dispatch = createEventDispatcher();
-  $: {
-    currentKeyframe = Math.floor($elapsed / duration);
-    sliderValue = currentKeyframe;
-  }
+
+  const onReset = () => {
+    currentKeyframe = 0;
+    timer.reset();
+  };
+
+  $: if (isEnabled) currentKeyframe = Math.floor($elapsed / duration);
 
   $: if (currentKeyframe === keyframeCount) dispatch("end");
 
@@ -20,15 +21,9 @@
 </script>
 
 <div>
-  <!-- <input
-    type="range"
-    min="{0}"
-    max="{keyframeCount}"
-    bind:value="{sliderValue}"
-  /> -->
-  <button on:click="{() => timer.start()}">start</button>
-  <button on:click="{() => timer.stop()}">stop</button>
-  <button on:click="{() => timer.reset()}">reset</button>
+  <button on:click="{() => (isEnabled = true)}">play</button>
+  <button on:click="{() => (isEnabled = false)}">pause</button>
+  <button on:click="{onReset}">reset</button>
 </div>
 
 <style>
@@ -36,5 +31,15 @@
     display: flex;
     justify-content: center;
     margin-bottom: 3em;
+  }
+
+  button {
+    margin: 0 0.5em;
+    padding: 0.5em;
+    border: none;
+    background: #ccc;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
   }
 </style>
