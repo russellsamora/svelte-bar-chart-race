@@ -34,10 +34,11 @@
   }
 
   button {
-    margin: 0 0.5em;
+    margin: 0.5em;
     padding: 0.5em;
     border: none;
     background: #ccc;
+    font-size: 14px;
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;

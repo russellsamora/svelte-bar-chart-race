@@ -1,5 +1,5 @@
 <script>
-  import Chart from "$components/Chart.svelte";
+  import Chart from "./Chart.svelte";
 </script>
 
 <main>
@@ -15,10 +15,13 @@
       Data from <a
         href="https://insights.stackoverflow.com/trends?tags=java%2Cc%2Cc%2B%2B%2Cpython%2Cc%23%2Cvb.net[…]mbly%2Cphp%2Cperl%2Cruby%2Cvb%2Cswift%2Cr%2Cobjective-c"
         >Stack Overflow</a
-      >. This was created for the
+      >. This visualization was created for the
       <a href="https://sveltesummit.com/">Svelte Summit 2021</a>
-      talk <a href="#">Tk Title</a> by Amelia Wattenberger and Russell
-      Goldenberg. View the source code on
+      talk entitled
+      <strong>Declarative Data Visualization: Creating a bar chart race</strong>
+      by <a href="https://twitter.com/wattenberger">Amelia Wattenberger</a> and
+      <a href="https://twitter.com/codenberg">Russell Goldenberg</a>. View the
+      source code on
       <a href="https://github.com/russellgoldenberg/svelte-bar-chart-race"
         >Github</a
       >.
@@ -55,5 +58,9 @@
   .outro {
     margin-top: 3em;
     border-top: 1px solid gray;
+  }
+
+  .outro p {
+    line-height: 1.4;
   }
 </style>

@@ -96,7 +96,7 @@
     display: block;
     position: relative;
     width: 100%;
-    height: 60vh;
+    height: 50vh;
     min-height: 420px;
     margin: 0;
     user-select: none;
