@@ -38,7 +38,7 @@
     margin: 0;
     transform: translate(-50%, -100%);
     font-size: 0.75em;
-    color: #5a5b6c;
+    color: #666;
     font-feature-settings: "tnum" 1;
   }
 </style>
