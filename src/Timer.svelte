@@ -1,5 +1,5 @@
 <script>
-  import { onMount, createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import { timer, elapsed } from "./timer.js";
   export let currentKeyframe = 0;
   export let keyframeCount = 0;

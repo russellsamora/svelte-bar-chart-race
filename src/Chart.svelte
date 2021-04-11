@@ -1,5 +1,5 @@
 <script>
-  import { range, scaleLinear, scaleQuantile } from "d3";
+  import { scaleLinear } from "d3";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
   import { tweened } from "svelte/motion";

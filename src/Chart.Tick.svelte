@@ -1,6 +1,7 @@
 <script>
   import { format } from "d3";
   import { fade } from "svelte/transition";
+
   export let value;
   export let x;
 
