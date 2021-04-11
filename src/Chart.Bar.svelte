@@ -9,11 +9,11 @@
 
   const borderWidth = 4;
 
-  $: width = $scales.x(value) || 0;
+  $: w = $scales.x(value) || 0;
   $: y = ($scales.y(rank) || 0) + $dimensions.barMargin / 2;
   $: barColor = `--bar-color: ${fill}88;`;
   $: transform = `transform: translateY(${y}px);`;
-  $: width = `width: ${width - borderWidth}px;`;
+  $: width = `width: ${w - borderWidth}px;`;
   $: height = `height: ${$dimensions.barHeight || 0}px;`;
 </script>
 
