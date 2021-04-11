@@ -6,10 +6,8 @@
   export let maxRank = 10;
 </script>
 
-<div>
-  {#each $data as { value, rank }, i (i)}
-    {#if rank < maxRank}
-      <Label value="{value}" rank="{rank}" i="{i}" />
-    {/if}
-  {/each}
-</div>
+{#each $data as { value, rank }, i (i)}
+  {#if rank < maxRank}
+    <Label value="{value}" rank="{rank}" i="{i}" />
+  {/if}
+{/each}

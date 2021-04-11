@@ -28,37 +28,35 @@
   let currentKeyframe = 0;
   let isEnabled = false;
 
-  $: frameIndex = Math.min(currentKeyframe, keyframeCount - 1);
-  $: frame = keyframes[frameIndex];
-  $: isEnabled = currentKeyframe < keyframeCount;
-  $: keyframeDate = frame[0];
-  $: keyframeData = frame[1];
+  // update dimensions
   $: width = figureWidth;
   $: height = figureHeight;
   $: barHeight = height / barCount - barMargin;
+
+  // update data
+  $: isEnabled = currentKeyframe < keyframeCount;
+  $: frameIndex = Math.min(currentKeyframe, keyframeCount - 1);
+  $: frame = keyframes[frameIndex];
+  $: keyframeDate = frame[0];
+  $: keyframeData = frame[1];
   $: currentData = names.map((name) => ({
     ...keyframeData.find((d) => d.name == name),
   }));
 
-  // update stores
+  // update stores and context
   $: data.set(currentData);
-
   $: dimensions.set({
     width,
     height,
     barHeight,
     barMargin,
   });
-
   $: xMax.set(Math.max(...keyframeData.map((d) => d.value)));
-
   $: scales.set({
     x: scaleLinear().domain([0, $xMax]).range([0, $dimensions.width]),
     y: scaleLinear().domain([0, barCount]).range([0, $dimensions.height]),
   });
-
   $: chartContext = { dimensions, scales, data, names };
-
   $: setContext("Chart", chartContext);
 </script>
 
@@ -71,7 +69,7 @@
     on:end="{() => (isEnabled = false)}"
   />
   <figure bind:offsetWidth="{figureWidth}" bind:offsetHeight="{figureHeight}">
-    <div>
+    <div class="bars">
       <Bars barCount="{barCount}" />
     </div>
 

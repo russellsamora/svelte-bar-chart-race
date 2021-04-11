@@ -1,9 +1,9 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte";
   import { timer, elapsed } from "./timer.js";
-  export let duration = 1000;
   export let currentKeyframe = 0;
   export let keyframeCount = 0;
+  export let duration = 1000;
   export let isEnabled = false;
 
   const dispatch = createEventDispatcher();
