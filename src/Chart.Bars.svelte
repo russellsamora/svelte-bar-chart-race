@@ -6,11 +6,11 @@
   const { data } = getContext("Chart");
   const colorCount = colors.length;
 
-  export let maxRank;
+  export let barCount;
 </script>
 
 {#each $data as { value, rank }, i (i)}
-  {#if rank < maxRank}
+  {#if rank < barCount}
     <Bar value="{value}" rank="{rank}" fill="{colors[i % colorCount]}" />
   {/if}
 {/each}

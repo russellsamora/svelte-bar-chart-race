@@ -13,18 +13,18 @@
   import keyframes from "./keyframes.json";
 
   const duration = 300; // ms between keyframes
-  const maxRank = 8; // how many bars to show
-  const names = keyframes[0][1].map((d) => d.name); // all company names
-  const keyframeCount = keyframes.length; // number of keyframes
+  const barCount = 8; // how many bars to show
   const barMargin = 4; // space between bars
+  const keyframeCount = keyframes.length; // number of keyframes
+  const names = keyframes[0][1].map((d) => d.name); // all data names/labels
 
   const dimensions = writable({});
   const scales = writable({});
   const data = tweened(null, { duration });
   const xMax = tweened(null, { duration });
 
-  let figureWidth;
-  let figureHeight;
+  let figureWidth = 0;
+  let figureHeight = 0;
   let currentKeyframe = 0;
   let isEnabled = false;
 
@@ -35,7 +35,7 @@
   $: keyframeData = frame[1];
   $: width = figureWidth;
   $: height = figureHeight;
-  $: barHeight = height / maxRank - barMargin;
+  $: barHeight = height / barCount - barMargin;
   $: currentData = names.map((name) => ({
     ...keyframeData.find((d) => d.name == name),
   }));
@@ -54,7 +54,7 @@
 
   $: scales.set({
     x: scaleLinear().domain([0, $xMax]).range([0, $dimensions.width]),
-    y: scaleLinear().domain([0, maxRank]).range([0, $dimensions.height]),
+    y: scaleLinear().domain([0, barCount]).range([0, $dimensions.height]),
   });
 
   $: chartContext = { dimensions, scales, data, names };
@@ -70,11 +70,9 @@
     isEnabled="{isEnabled}"
     on:end="{() => (isEnabled = false)}"
   />
-  <!-- <h3>Best Global Brands</h3>
-  <p>Value in $M; Data: Interbrand</p> -->
   <figure bind:offsetWidth="{figureWidth}" bind:offsetHeight="{figureHeight}">
     <div>
-      <Bars maxRank="{maxRank}" />
+      <Bars barCount="{barCount}" />
     </div>
 
     <div class="axis">
@@ -82,7 +80,7 @@
     </div>
 
     <div class="labels">
-      <Labels maxRank="{maxRank}" />
+      <Labels barCount="{barCount}" />
     </div>
 
     <div class="ticker">
