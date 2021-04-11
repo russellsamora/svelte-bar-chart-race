@@ -1,6 +1,8 @@
 <script>
+  import { timeParse } from "d3";
+
   export let date;
-  $: year = new Date(date).getFullYear();
+  $: year = timeParse("%m-%d-%Y")(date).getFullYear();
 </script>
 
 {#if date}
